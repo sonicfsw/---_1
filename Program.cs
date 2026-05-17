@@ -3,8 +3,8 @@ using System;
 // Класс Point описывает точку на плоскости с декартовыми координатами X и Y.
 public class Point
 {
-    // Координата точки по оси X.
-    // private set означает, что изменить координату можно только внутри класса Point.
+    // Координата точки по оси X
+    // private set означает, что изменить координату можно только внутри класса Point
     public double X { get; private set; }
 
     // Координата точки по оси Y.
@@ -62,16 +62,16 @@ public class Program
 {
     public static void Main()
     {
-        // Создаем две точки с заданными координатами.
+        // Создаем две точки с заданными координатами
         Point firstPoint = new Point(1, 1);
         Point secondPoint = new Point(7, 1);
 
-        // Выводим начальные координаты точек.
+        // Выводим начальные координаты точек
         Console.WriteLine($"Первая точка: {firstPoint}");
         Console.WriteLine($"Вторая точка: {secondPoint}");
 
         // Выводим расстояние от первой точки до начала координат
-        // и расстояние между первой и второй точкой.
+        // и расстояние между первой и второй точкой
         Console.WriteLine($"Расстояние от первой точки до начала координат: {firstPoint.DistanceToOrigin():F2}");
         Console.WriteLine($"Расстояние между точками: {firstPoint.DistanceTo(secondPoint):F2}");
 
