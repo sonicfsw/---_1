@@ -3,8 +3,8 @@ using System;
 // Класс Point описывает точку на плоскости с декартовыми координатами X и Y.
 public class Point
 {
-    // Координата точки по оси X.
-    // private set означает, что изменить координату можно только внутри класса Point.
+    // Координата точки по оси X
+    // private set означает, что изменить координату можно только внутри класса Point
     public double X { get; private set; }
 
     // Координата точки по оси Y.
@@ -62,24 +62,68 @@ public class Program
 {
     public static void Main()
     {
-        // Создаем две точки с заданными координатами.
-        Point firstPoint = new Point(1, 1);
-        Point secondPoint = new Point(7, 1);
+        try
+        {
+            Console.WriteLine("Введите координаты первой точки.");
+            Point firstPoint = ReadPoint();
 
-        // Выводим начальные координаты точек.
-        Console.WriteLine($"Первая точка: {firstPoint}");
-        Console.WriteLine($"Вторая точка: {secondPoint}");
+            Console.WriteLine("Введите координаты второй точки.");
+            Point secondPoint = ReadPoint();
 
-        // Выводим расстояние от первой точки до начала координат
-        // и расстояние между первой и второй точкой.
-        Console.WriteLine($"Расстояние от первой точки до начала координат: {firstPoint.DistanceToOrigin():F2}");
-        Console.WriteLine($"Расстояние между точками: {firstPoint.DistanceTo(secondPoint):F2}");
+            Console.WriteLine("Введите расстояние для перемещения первой точки.");
+            double moveByX = ReadDouble("По оси X: ");
+            double moveByY = ReadDouble("По оси Y: ");
 
-        // Перемещаем первую точку: по X на 2, по Y на -1.
-        firstPoint.MoveX(2);
-        firstPoint.MoveY(-1);
+            // Выводим начальные координаты точек.
+            Console.WriteLine($"Первая точка: {firstPoint}");
+            Console.WriteLine($"Вторая точка: {secondPoint}");
 
-        // Выводим координаты первой точки после перемещения.
-        Console.WriteLine($"Первая точка после перемещения: {firstPoint}");
+            // Выводим расстояние от первой точки до начала координат
+            // и расстояние между первой и второй точкой.
+            Console.WriteLine($"Расстояние от первой точки до начала координат: {firstPoint.DistanceToOrigin():F2}");
+            Console.WriteLine($"Расстояние между точками: {firstPoint.DistanceTo(secondPoint):F2}");
+
+            // Перемещаем первую точку на расстояния, введенные пользователем.
+            firstPoint.MoveX(moveByX);
+            firstPoint.MoveY(moveByY);
+
+            // Выводим координаты первой точки после перемещения.
+            Console.WriteLine($"Первая точка после перемещения: {firstPoint}");
+        }
+        catch (FormatException)
+        {
+            Console.WriteLine("Ошибка: нужно вводить числовые значения.");
+        }
+        catch (OverflowException)
+        {
+            Console.WriteLine("Ошибка: введенное число слишком большое или слишком маленькое.");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Непредвиденная ошибка: {ex.Message}");
+        }
+    }
+
+    // Метод считывает координаты точки с клавиатуры и создает объект Point.
+    private static Point ReadPoint()
+    {
+        double x = ReadDouble("X: ");
+        double y = ReadDouble("Y: ");
+
+        return new Point(x, y);
+    }
+
+    // Метод считывает одно вещественное число с клавиатуры.
+    private static double ReadDouble(string message)
+    {
+        Console.Write(message);
+        string? input = Console.ReadLine();
+
+        if (string.IsNullOrWhiteSpace(input))
+        {
+            throw new FormatException();
+        }
+
+        return double.Parse(input);
     }
 }
